@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/user-allergens",
+      "handler": "user-allergen.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/user-allergens/count",
+      "handler": "user-allergen.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/user-allergens/:id",
+      "handler": "user-allergen.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/user-allergens",
+      "handler": "user-allergen.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/user-allergens/:id",
+      "handler": "user-allergen.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/user-allergens/:id",
+      "handler": "user-allergen.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

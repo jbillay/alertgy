@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "allergens",
+  "info": {
+    "name": "allergen"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "unique": false
+    },
+    "active": {
+      "type": "boolean"
+    },
+    "picto": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "description": {
+      "type": "richtext"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_allergens",
+  "info": {
+    "name": "userAllergen"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "allergen": {
+      "model": "allergen"
+    }
+  }
+}

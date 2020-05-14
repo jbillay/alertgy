@@ -24,8 +24,23 @@ const UserAllergenService = {
     }
   },
 
+   /**
+   * Retrieve one allergen for the current user (AlertgyUserAllergen[])
+   *
+   * @returns allergen list
+   **/
+  one: async function(allergenId: string): Promise<AlertgyUserAllergen[]> {
+    try {
+      const user = StorageService.getUser();
+      const response = await ApiService.get(`/user-allergens?user=${user._id}&allergen=${allergenId}`);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.status);
+    }
+  },
+
   /**
-   * Retrieve add one allergen to the current user
+   * Retrieve add allergen(s) to the current user
    *
    * @returns allergen
    **/
@@ -37,6 +52,29 @@ const UserAllergenService = {
       try {
         const element = { user: user._id, allergen: allergen._id };
         await ApiService.post("/user-allergens", element);
+      } catch (error) {
+        throw new Error(error.response.status);
+      }
+    });
+    const userAllergens: AlertgyAllergen[] = await this.all();
+    return userAllergens;
+  },
+
+  
+  /**
+   * Retrieve remove allergen(s) to the current user
+   *
+   * @returns allergen
+   **/
+  remove: async function(
+    allergenList: AlertgyAllergen[]
+  ): Promise<AlertgyAllergen[]> {
+    allergenList.forEach(async (allergen: AlertgyAllergen) => {
+      try {
+        const userAllergenList: AlertgyUserAllergen[] = await this.one(allergen._id);
+        userAllergenList.forEach(async (userAllergen: AlertgyUserAllergen) => {
+          await ApiService.delete(`/user-allergens/${userAllergen._id}`, {});
+        })
       } catch (error) {
         throw new Error(error.response.status);
       }

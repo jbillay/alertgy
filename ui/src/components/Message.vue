@@ -1,6 +1,11 @@
 <template>
   <div>
-    <v-alert v-if="message.message" :type="message.type">
+    <v-alert
+      v-model="alert"
+      v-if="message.message"
+      :type="message.type"
+      dismissible
+    >
       {{ message.message }}
     </v-alert>
   </div>
@@ -8,6 +13,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      alert: true
+    }
+  },
   computed: {
     message() {
       return this.$store.getters["message/message"];

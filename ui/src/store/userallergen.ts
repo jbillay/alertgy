@@ -37,8 +37,34 @@ const addUserAllergenAction = async function(
   allergenList: AlertgyAllergen[]
 ) {
   try {
-    const allergens = await UserAllergenService.add(allergenList);
-    commit("userAllergenSuccess", allergens);
+    const newAllergenList = await UserAllergenService.add(allergenList);
+    commit("userAllergenSuccess", newAllergenList);
+    const messageInfo: AlertgyMessage = {
+      type: "success",
+      message: "Allergen(s) added successfully",
+    };
+  } catch (error) {
+    const messageInfo: AlertgyMessage = {
+      type: "error",
+      message: error.message,
+    };
+    commit("message/createMessage", messageInfo, { root: true });
+    throw new Error(error);
+  }
+};
+
+const removeUserAllergenAction = async function(
+  { commit }: ActionContext<State, State>,
+  allergenList: AlertgyAllergen[]
+) {
+  try {
+    const newAllergenList = await UserAllergenService.remove(allergenList);
+    commit("userAllergenSuccess", newAllergenList);
+    const messageInfo: AlertgyMessage = {
+      type: "success",
+      message: "Allergen(s) removed successfully",
+    };
+    commit("message/createMessage", messageInfo, { root: true });
   } catch (error) {
     const messageInfo: AlertgyMessage = {
       type: "error",
@@ -81,6 +107,7 @@ export default {
   actions: {
     get: getUserAllergenAction,
     add: addUserAllergenAction,
+    remove: removeUserAllergenAction,
   },
   state: new State(),
 };

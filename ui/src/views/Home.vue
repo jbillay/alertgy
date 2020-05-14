@@ -1,40 +1,47 @@
 <template>
   <div class="home">
-    <Message />
-    <v-card class="mx-auto" max-width="700" outlined>
-      <v-card-title>
-        My Allergens
-        <v-spacer></v-spacer>
-        <v-text-field
-          v-model="search"
-          append-icon="mdi-magnify"
-          label="Search"
-          single-line
-          hide-details
-        ></v-text-field>
-      </v-card-title>
-      <v-data-table
-        :headers="headers"
-        :items="userAllergens"
-        :search="search"
-        item-key="name"
-        class="elevation-1"
-      >
-        <template v-slot:item.name="{ item }">
-          <span>
-            <v-avatar>
-              <img :src="url(item.picto[0].url)" />
-            </v-avatar>
-            {{ item.name }}
-          </span>
-        </template>
-      </v-data-table>
-    </v-card>
-    <div class="text-center pt-2">
-      <v-btn text dark color="teal white--text" @click="goToAllergen()">
-        <span>Add allergen to my profile</span>
-      </v-btn>
-    </div>
+    <v-container>
+      <Message />
+      <v-card class="mx-auto" max-width="700" outlined>
+        <v-card-title>
+          My Allergens
+          <v-spacer></v-spacer>
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+          ></v-text-field>
+        </v-card-title>
+        <v-data-table
+          :headers="headers"
+          :items="userAllergens"
+          :search="search"
+          item-key="name"
+          class="elevation-1"
+        >
+          <template v-slot:item.name="{ item }">
+            <span>
+              <v-avatar>
+                <img :src="url(item.picto[0].url)" />
+              </v-avatar>
+              {{ item.name }}
+            </span>
+          </template>
+          <template v-slot:item.action="{ item }">
+            <v-icon color="red darken-1" @click="removeAllergen(item)"
+              >mdi-delete-outline</v-icon
+            >
+          </template>
+        </v-data-table>
+      </v-card>
+      <div class="text-center pt-2">
+        <v-btn text dark color="teal white--text" @click="goToAllergen()">
+          <span>Add allergen to my profile</span>
+        </v-btn>
+      </div>
+    </v-container>
   </div>
 </template>
 
@@ -56,6 +63,12 @@ export default {
           sortable: true,
           value: "name",
         },
+        {
+          text: "Action",
+          align: "start",
+          sortable: false,
+          value: "action",
+        },
       ],
     };
   },
@@ -65,6 +78,10 @@ export default {
     },
     goToAllergen() {
       this.$router.push("/allergens");
+    },
+    async removeAllergen(allergen) {
+      const allergenList = [allergen];
+      await this.$store.dispatch("userallergen/remove", allergenList);
     },
   },
   computed: {

@@ -58,6 +58,11 @@ export interface AlertgyAllergenPicto {
 }
 
 export interface AlertgyUserAllergen {
+  _id: string;
   user: AlertgyUser;
   allergen: AlertgyAllergen;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+  id: string;
 }

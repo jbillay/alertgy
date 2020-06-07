@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import Message from "@/components/Message.vue";
+import Message from "@/components/Utils/Message.vue";
 
 export default {
   components: {
@@ -55,6 +55,7 @@ export default {
       const { email, password } = this;
       this.$store
         .dispatch("user/login", {
+          type: "user",
           identifier: email,
           password: password,
         })

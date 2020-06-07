@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import Message from "@/components/Message.vue";
+import Message from "@/components/Utils/Message.vue";
 
 export default {
   components: {
@@ -76,8 +76,10 @@ export default {
     },
     filteredAllergen() {
       return this.allAllergens.filter((allergen) => {
-        return !this.userAllergens.find(userAllergen => userAllergen.id === allergen.id);
-      })
+        return !this.userAllergens.find(
+          (userAllergen) => userAllergen.id === allergen.id
+        );
+      });
     },
   },
   methods: {
@@ -85,7 +87,17 @@ export default {
       return new URL(pictUrl, this.imageRoot).href;
     },
     addToUserProfile() {
-      this.$store.dispatch("userallergen/add", this.selected);
+      if (this.selected.length > 0) {
+        this.$store.dispatch("userallergen/add", this.selected);
+        this.selected = [];
+      } else {
+        const userMsg = {
+          type: "warning",
+          message: "Please select at least one allergen",
+          time: 3000,
+        };
+        this.$store.dispatch("message/send", userMsg);
+      }
     },
   },
   async created() {

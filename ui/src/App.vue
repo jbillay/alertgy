@@ -12,9 +12,10 @@
 // @ is an alias to /src
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import UserLayout from "@/layouts/UserLayout.vue";
+import PartnerLayout from "@/layouts/PartnerLayout.vue";
 
 export default {
   name: "App",
-  components: { EmptyLayout, UserLayout }
+  components: { EmptyLayout, UserLayout, PartnerLayout },
 };
 </script>

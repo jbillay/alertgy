@@ -2,7 +2,7 @@
   <nav>
     <v-app-bar>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Calpo</v-toolbar-title>
+      <v-toolbar-title>Alergy</v-toolbar-title>
       <v-spacer></v-spacer>
 
       <v-btn text dark color="teal white--text" @click="signOut">
@@ -39,6 +39,7 @@
           :key="item.title"
           link
           :to="item.path"
+          exact
         >
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
@@ -60,8 +61,8 @@ export default {
       drawer: false,
       items: [
         { title: "Home", icon: "dashboard", path: "/" },
+        { title: "Profile", icon: "assignment_ind", path: "/profile" },
         { title: "Allergens", icon: "view_list", path: "/allergens" },
-        { title: "404", icon: "build", path: "/admin" },
       ],
     };
   },

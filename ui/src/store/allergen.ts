@@ -1,4 +1,3 @@
-import { ActionContext } from "vuex";
 import AllergenService from "@/services/AllergenService";
 import { AlertgyAllergen, AlertgyMessage } from "@/types/alertgy.d";
 
@@ -15,18 +14,16 @@ class State {
  ** ACTIONS
  **
  */
-const allergensAction = async function({
-  commit,
-}: ActionContext<State, State>): Promise<void> {
+const allergensAction = async function(context: any): Promise<void> {
   try {
     const allergens: AlertgyAllergen[] = await AllergenService.all();
-    commit("allergenSuccess", allergens);
+    context.commit("allergenSuccess", allergens);
   } catch (error) {
     const messageInfo: AlertgyMessage = {
       type: "error",
       message: error.message,
     };
-    commit("message/createMessage", messageInfo, { root: true });
+    context.commit("message/createMessage", messageInfo, { root: true });
     throw new Error(error);
   }
 };

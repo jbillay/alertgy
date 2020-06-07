@@ -66,3 +66,49 @@ export interface AlertgyUserAllergen {
   __v: number;
   id: string;
 }
+
+export interface AlertgyRestaurantLogo {
+  _id: string;
+  name: string;
+  alternativeText: string;
+  caption: string;
+  hash: string;
+  ext: string;
+  mime: string;
+  size: number;
+  width: number;
+  height: number;
+  url: string;
+  provider: string;
+  related: string[];
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+  id: string;
+}
+
+export interface AlertgyRestaurant {
+  logo: AlertgyRestaurantLogo[];
+  _id: string;
+  name: string;
+  street: string;
+  zipcode: string;
+  city: string;
+  phone: string;
+  description: string;
+  contact: string;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+  id: string;
+}
+
+ export interface AlertgyUserRestaurant {
+   _id: string;
+   createdAt: Date;
+   updatedAt: Date;
+   __v: number;
+   restaurant: AlertgyRestaurant;
+   user: AlertgyUser;
+   id: string;
+ }

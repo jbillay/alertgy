@@ -9,16 +9,6 @@ interface ResponseAllergen {
   data?: AlertgyAllergen;
 }
 
-// class AllergenError extends Error {
-//   public errorCode: string;
-//   constructor(errorCode: string, message: string) {
-//     super(message);
-//     this.name = this.constructor.name;
-//     this.message = message;
-//     this.errorCode = errorCode;
-//   }
-// }
-
 const AllergenService = {
   /**
    * Retrieve all allergens

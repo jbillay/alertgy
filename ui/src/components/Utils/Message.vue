@@ -15,12 +15,21 @@
 export default {
   data() {
     return {
-      alert: true
-    }
+      alert: true,
+    };
+  },
+  methods: {
+    closeAtTime(time) {
+      setInterval(() => this.$store.dispatch('message/clear'), time);
+    },
   },
   computed: {
     message() {
-      return this.$store.getters["message/message"];
+      const messageInfo = this.$store.getters['message/message'];
+      if (messageInfo.time) {
+        this.closeAtTime(messageInfo.time);
+      }
+      return messageInfo;
     },
   },
 };

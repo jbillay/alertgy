@@ -1,5 +1,5 @@
-const TOKEN_KEY = "access_token";
-const USER_KEY = "access_user";
+const TOKEN_KEY = "alertgy_token";
+const USER_KEY = 'alertgy_user';
 
 /**
  * Manage the how Access Tokens are being stored and retreived from storage.

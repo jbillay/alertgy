@@ -3,7 +3,9 @@ import Vuex from "vuex";
 import user from "./user";
 import message from "./message";
 import allergen from "./allergen";
+import restaurant from "./restaurant";
 import userallergen from "./userallergen";
+import userrestaurant from "./userrestaurant";
 
 Vue.use(Vuex);
 
@@ -14,7 +16,9 @@ export default new Vuex.Store({
     user,
     message,
     allergen,
+    restaurant,
     userallergen,
+    userrestaurant,
   },
   strict: debug,
 });

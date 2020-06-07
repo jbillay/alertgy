@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "menu_items_categories",
+  "info": {
+    "name": "menuItemsCategories"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "picto": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    }
+  }
+}

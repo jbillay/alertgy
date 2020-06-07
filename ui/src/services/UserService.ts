@@ -1,6 +1,8 @@
 import ApiService from "./ApiService";
 import StorageService from "./StorageService";
 
+const partnerRoleName = "partner";
+
 class AuthenticationError extends Error {
   public errorCode: string;
   public message: string;
@@ -16,16 +18,24 @@ const UserService = {
   /**
    * Login the user and store the access token to TokenService.
    *
-   * @returns access_token
+   * @returns access_token, user
    * @throws AuthenticationError
    **/
   login: async function(userInfo: any) {
     try {
-      const response: any = await ApiService.post("auth/local", userInfo);
+      const { type, ...loginInfo } = userInfo;
+      const response: any = await ApiService.post("auth/local", loginInfo);
       const { jwt, user } = response.data;
-      StorageService.saveToken(jwt);
-      StorageService.saveUser(user);
-      ApiService.setHeader();
+      if (type === partnerRoleName && user.role.name !== partnerRoleName) {
+        throw new AuthenticationError(
+          "403",
+          "Only Partner can access this section"
+        );
+      } else {
+        StorageService.saveToken(jwt);
+        StorageService.saveUser(user);
+        ApiService.setHeader();
+      }
       return { jwt, user };
     } catch (error) {
       if (typeof error.response !== "undefined") {
@@ -54,7 +64,7 @@ const UserService = {
   /**
    * Create a user and authenticate him directly.
    *
-   * @returns access_token
+   * @returns access_token, user
    * @throws AuthenticationError
    **/
   create: async function(userDetails: any) {
@@ -87,9 +97,9 @@ const UserService = {
   },
 
   /**
-   * Login the user and store the access token to TokenService.
+   * Update user informations (email, firstname, lastname)
    *
-   * @returns access_token
+   * @returns user
    * @throws AuthenticationError
    **/
   update: async function(userDetails: any) {
@@ -103,10 +113,15 @@ const UserService = {
       StorageService.saveUser(user);
       return user;
     } catch (error) {
-      throw new AuthenticationError(
-        error.response.data.statusCode,
-        error.response.data.message[0].messages[0].message
-      );
+      if (typeof error.response !== "undefined") {
+        throw new AuthenticationError(
+          error.response.data.statusCode,
+          error.response.data.message
+        );
+      } else {
+        console.error(error);
+        throw new AuthenticationError("401", error);
+      }
     }
   },
 };

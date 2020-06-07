@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_restaurants",
+  "info": {
+    "name": "userRestaurant"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "restaurant": {
+      "model": "restaurant"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
+    }
+  }
+}

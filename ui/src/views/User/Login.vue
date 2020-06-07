@@ -3,7 +3,7 @@
     <v-content>
       <v-container class="fill-height" fluid>
         <v-row align="center" justify="center">
-          <img class="" src="./../assets/logo.png" alt="" />
+          <img class="" src="@/assets/logo.png" alt="" />
         </v-row>
         <v-row align="center" justify="center">
           <v-col cols="12" sm="8" md="4">
@@ -12,7 +12,7 @@
         </v-row>
         <v-row align="center" justify="center">
             <v-btn text dark color="teal white--text" @click="switchForm()">
-              <span>Create New Account</span>
+              <span>{{ currentText.text }}</span>
             </v-btn>
         </v-row>
       </v-container>
@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import UserLogin from "@/components/UserLogin.vue";
-import UserCreate from "@/components/UserCreate.vue";
+import UserLogin from "@/components/User/UserLogin.vue";
+import UserCreate from "@/components/User/UserCreate.vue";
 
 export default {
   components: {
@@ -30,14 +30,18 @@ export default {
   },
   data() {
     return {
-      currentForm: { component: "UserLogin", switchTo: "UserCreate"}
+      currentForm: { component: "UserLogin", switchTo: "UserCreate"},
+      currentText: { text: "Create New Account", switchTo: "Back to login"}
     };
   },
   methods: {
     switchForm() {
       const currentForm = this.currentForm.component;
+      const currentText = this.currentText.text;
       this.currentForm.component = this.currentForm.switchTo;
       this.currentForm.switchTo = currentForm;
+      this.currentText.text = this.currentText.switchTo;
+      this.currentText.switchTo = currentText;
     }
   },
 };

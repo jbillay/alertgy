@@ -1,8 +1,8 @@
 <template>
   <div>
     <v-card class="elevation-12">
-      <v-toolbar color="teal" dark flat>
-        <v-toolbar-title>Welcome to AlertGy</v-toolbar-title>
+      <v-toolbar color="primary" dark flat>
+        <v-toolbar-title>Welcome to AlertGy Partner</v-toolbar-title>
       </v-toolbar>
       <v-card-text>
         <Message />
@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import Message from "@/components/Message.vue";
+import Message from "@/components/Utils/Message.vue";
 import short from "short-uuid";
 
 export default {
@@ -111,7 +111,6 @@ export default {
       if (this.$refs.form.validate()) {
         const translator = short();
         this.newUserForm.username = translator.generate();
-        console.log(this.newUserForm);
         this.$store
           .dispatch("user/create", this.newUserForm)
           .then(() => this.$router.push("/"))

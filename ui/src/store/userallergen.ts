@@ -1,10 +1,8 @@
-import { AlertgyAllergen } from "./../types/alertgy.d";
-import { ActionContext } from "vuex";
 import UserAllergenService from "@/services/UserAllergenService";
-import { AlertgyUserAllergen, AlertgyMessage } from "@/types/alertgy.d";
+import { AlertgyAllergen, AlertgyMessage } from "@/types/alertgy.d";
 
 class State {
-  public allergenList: AlertgyUserAllergen[];
+  public allergenList: AlertgyAllergen[];
 
   constructor() {
     this.allergenList = [];
@@ -16,61 +14,62 @@ class State {
  ** ACTIONS
  **
  */
-const getUserAllergenAction = async function({
-  commit,
-}: ActionContext<State, State>): Promise<void> {
+const getUserAllergenAction = async function(context: any): Promise<void> {
   try {
-    const allergens = await UserAllergenService.all();
-    commit("userAllergenSuccess", allergens);
+    const allergens: AlertgyAllergen[] = await UserAllergenService.all();
+    context.commit("userAllergenSuccess", allergens);
   } catch (error) {
     const messageInfo: AlertgyMessage = {
       type: "error",
       message: error.message,
     };
-    commit("message/createMessage", messageInfo, { root: true });
+    context.commit("message/createMessage", messageInfo, { root: true });
     throw new Error(error);
   }
 };
 
 const addUserAllergenAction = async function(
-  { commit }: ActionContext<State, State>,
+  context: any,
   allergenList: AlertgyAllergen[]
 ) {
   try {
     const newAllergenList = await UserAllergenService.add(allergenList);
-    commit("userAllergenSuccess", newAllergenList);
+    context.commit("userAllergenSuccess", newAllergenList);
     const messageInfo: AlertgyMessage = {
       type: "success",
       message: "Allergen(s) added successfully",
+      time: 5000,
     };
+    context.commit("message/createMessage", messageInfo, { root: true });
   } catch (error) {
     const messageInfo: AlertgyMessage = {
       type: "error",
       message: error.message,
     };
-    commit("message/createMessage", messageInfo, { root: true });
+    context.commit("message/createMessage", messageInfo, { root: true });
     throw new Error(error);
   }
 };
 
 const removeUserAllergenAction = async function(
-  { commit }: ActionContext<State, State>,
+  context: any,
   allergenList: AlertgyAllergen[]
 ) {
   try {
     const newAllergenList = await UserAllergenService.remove(allergenList);
-    commit("userAllergenSuccess", newAllergenList);
+    context.commit("userAllergenSuccess", newAllergenList);
     const messageInfo: AlertgyMessage = {
       type: "success",
       message: "Allergen(s) removed successfully",
+      time: 5000,
     };
-    commit("message/createMessage", messageInfo, { root: true });
+    context.commit("message/createMessage", messageInfo, { root: true });
   } catch (error) {
     const messageInfo: AlertgyMessage = {
       type: "error",
       message: error.message,
     };
-    commit("message/createMessage", messageInfo, { root: true });
+    context.commit("message/createMessage", messageInfo, { root: true });
     throw new Error(error);
   }
 };
@@ -80,9 +79,9 @@ const removeUserAllergenAction = async function(
  ** MUTATIONS
  **
  */
-const userAllergenSuccess = function(
+const userAllergenSuccessMutation = function(
   state: State,
-  allergenList: AlertgyUserAllergen[]
+  allergenList: AlertgyAllergen[]
 ) {
   state.allergenList = allergenList;
 };
@@ -102,7 +101,7 @@ export default {
     all: userAllergenGetter,
   },
   mutations: {
-    userAllergenSuccess: userAllergenSuccess,
+    userAllergenSuccess: userAllergenSuccessMutation,
   },
   actions: {
     get: getUserAllergenAction,

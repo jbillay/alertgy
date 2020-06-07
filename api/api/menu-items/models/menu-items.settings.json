@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "menu_items",
+  "info": {
+    "name": "menuItems"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "price": {
+      "type": "decimal"
+    },
+    "available": {
+      "type": "boolean",
+      "default": true
+    },
+    "pictures": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "menu_category": {
+      "model": "menu-category"
+    },
+    "allergens": {
+      "collection": "allergen"
+    },
+    "menu_items_categories": {
+      "collection": "menu-items-categories"
+    },
+    "restaurant": {
+      "model": "restaurant"
+    }
+  }
+}

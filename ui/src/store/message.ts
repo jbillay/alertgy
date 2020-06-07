@@ -1,5 +1,5 @@
-import { ActionContext } from "vuex";
-import { AlertgyMessage } from "@/types/alertgy.d";
+import { ActionContext } from 'vuex';
+import { AlertgyMessage } from '@/types/alertgy.d';
 
 class State {
   public message: AlertgyMessage;
@@ -15,10 +15,14 @@ class State {
  **
  */
 const sendMessageAction = function(
-  { commit }: ActionContext<State, State>,
+  context: any,
   messageInfo: AlertgyMessage
 ): void {
-  commit("createMessage", messageInfo);
+  context.commit('createMessage', messageInfo);
+};
+
+const clearMessageAction = function(context: any): void {
+  context.commit("clearMessage");
 };
 
 /*
@@ -50,10 +54,11 @@ export default {
   },
   mutations: {
     createMessage: createMessageMutation,
-    clearMessage: clearMessageMutation
+    clearMessage: clearMessageMutation,
   },
   actions: {
-    sendMessage: sendMessageAction,
+    send: sendMessageAction,
+    clear: clearMessageAction,
   },
   state: new State(),
 };

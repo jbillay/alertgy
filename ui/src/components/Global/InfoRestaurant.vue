@@ -1,6 +1,7 @@
 <template>
   <div>
-    <v-card class="mx-auto my-12" max-width="374">
+    <LoadingSpinner v-if="isPending" />
+    <v-card v-else class="mx-auto my-12" max-width="374">
       <v-img :src="url(restaurant.logo[0].url)"></v-img>
 
       <v-card-title>{{ restaurant.name }}</v-card-title>
@@ -32,7 +33,9 @@
         <p>
           <strong>Email: </strong>
           <span>
-            <a :href="`mailto:${restaurant.email}`" target="_blank">{{ restaurant.email }}</a>
+            <a :href="`mailto:${restaurant.email}`" target="_blank">{{
+              restaurant.email
+            }}</a>
           </span>
         </p>
         <p>
@@ -44,7 +47,7 @@
       </v-card-text>
 
       <v-card-actions>
-        <component :is="`${type}ActionRestaurant`" />
+        <component :is="`${type}ActionRestaurant`" :id="this.id" />
       </v-card-actions>
     </v-card>
   </div>
@@ -60,6 +63,7 @@ export default {
   data() {
     return {
       imageRoot: process.env.VUE_APP_BACKEND_API,
+      isPending: true,
     };
   },
   props: {
@@ -78,6 +82,7 @@ export default {
   },
   async created() {
     await this.$store.dispatch("restaurant/get", this.id);
+    this.isPending = false;
   },
 };
 </script>

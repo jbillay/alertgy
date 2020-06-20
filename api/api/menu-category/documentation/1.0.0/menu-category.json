@@ -529,7 +529,8 @@
     "schemas": {
       "Menu-category": {
         "required": [
-          "id"
+          "id",
+          "order"
         ],
         "properties": {
           "id": {
@@ -579,16 +580,25 @@
                 "type": "string"
               }
             }
+          },
+          "order": {
+            "type": "integer"
           }
         }
       },
       "NewMenu-category": {
+        "required": [
+          "order"
+        ],
         "properties": {
           "name": {
             "type": "string"
           },
           "user": {
             "type": "string"
+          },
+          "order": {
+            "type": "integer"
           }
         }
       }

@@ -41,12 +41,7 @@
 </template>
 
 <script>
-import Message from "@/components/Utils/Message.vue";
-
 export default {
-  components: {
-    Message,
-  },
   data: () => ({
     valid: true,
     newRestaurantForm: {

@@ -614,7 +614,8 @@
           },
           "menu_category": {
             "required": [
-              "id"
+              "id",
+              "order"
             ],
             "properties": {
               "id": {
@@ -625,6 +626,9 @@
               },
               "user": {
                 "type": "string"
+              },
+              "order": {
+                "type": "integer"
               }
             }
           },

@@ -4,37 +4,33 @@
       <div class="bg-purple">
         <div class="stars">
           <div class="central-body">
-            <img
-              class="image-404"
-              src="http://salehriaz.com/404Page/img/404.svg"
-              width="300px"
-            />
-            <v-btn rounded text to="/" class="btn-go-home">
+            <img class="image-404" src="@/assets/404/404.svg" width="300px" />
+            <v-btn rounded text @click="goback()" class="btn-go-home">
               <span class="btn-go-home-text">GO BACK HOME</span>
             </v-btn>
           </div>
           <div class="objects">
             <img
               class="object_rocket"
-              src="http://salehriaz.com/404Page/img/rocket.svg"
+              src="@/assets/404/rocket.svg"
               width="40px"
             />
             <div class="earth-moon">
               <img
                 class="object_earth"
-                src="http://salehriaz.com/404Page/img/earth.svg"
+                src="@/assets/404/earth.svg"
                 width="100px"
               />
               <img
                 class="object_moon"
-                src="http://salehriaz.com/404Page/img/moon.svg"
+                src="@/assets/404/moon.svg"
                 width="80px"
               />
             </div>
             <div class="box_astronaut">
               <img
                 class="object_astronaut"
-                src="http://salehriaz.com/404Page/img/astronaut.svg"
+                src="@/assets/404/astronaut.svg"
                 width="140px"
               />
             </div>
@@ -53,7 +49,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    goback() {
+      this.$router.go(-1);
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -181,7 +183,7 @@ body {
 }
 
 .bg-purple {
-  background: url(http://salehriaz.com/404Page/img/bg_purple.png);
+  background: url(../assets/404/bg_purple.png);
   background-repeat: repeat-x;
   background-size: cover;
   background-position: left top;
@@ -348,7 +350,7 @@ li a:hover {
 }
 
 .stars {
-  background: url(http://salehriaz.com/404Page/img/overlay_stars.svg);
+  background: url(../assets/404/overlay_stars.svg);
   background-repeat: repeat;
   background-size: contain;
   background-position: left top;

@@ -8,6 +8,12 @@ import vuetify from "./plugins/vuetify";
 import ApiService from "@/services/ApiService";
 import StorageService from "@/services/StorageService";
 
+import LoadingSpinner from "@/components/Utils/LoadingSpinner.vue";
+import Message from "@/components/Utils/Message.vue";
+
+Vue.component("LoadingSpinner", LoadingSpinner);
+Vue.component("Message", Message);
+
 Vue.config.productionTip = false;
 Vue.use(vueMoment);
 
@@ -28,5 +34,5 @@ new Vue({
   router,
   store,
   vuetify,
-  render: h => h(App)
+  render: (h) => h(App),
 }).$mount("#app");

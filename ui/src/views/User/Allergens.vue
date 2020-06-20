@@ -1,6 +1,7 @@
 <template>
   <div>
-    <v-container>
+    <LoadingSpinner v-if="isPending" />
+    <v-container v-else>
       <Message />
       <v-card class="mx-auto" max-width="700" outlined>
         <v-card-title>
@@ -43,15 +44,11 @@
 </template>
 
 <script>
-import Message from "@/components/Utils/Message.vue";
-
 export default {
-  components: {
-    Message,
-  },
   data() {
     return {
       imageRoot: process.env.VUE_APP_BACKEND_API,
+      isPending: true,
       search: "",
       selected: [],
       headers: [
@@ -103,6 +100,7 @@ export default {
   async created() {
     await this.$store.dispatch("allergen/all");
     await this.$store.dispatch("userallergen/get");
+    this.isPending = false;
   },
 };
 </script>

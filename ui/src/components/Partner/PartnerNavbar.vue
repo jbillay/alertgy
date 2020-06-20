@@ -61,8 +61,6 @@ export default {
       drawer: false,
       items: [
         { title: "Home", icon: "dashboard", path: "/partner" },
-        { title: "Restaurant", icon: "restaurant", path: "/partner/restaurant" },
-        { title: "Menu", icon: "restaurant_menu", path: "/partner/menu" },
       ],
     };
   },

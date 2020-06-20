@@ -1,6 +1,7 @@
 <template>
   <div>
-    <v-card class="mx-auto" max-width="700" outlined>
+    <LoadingSpinner v-if="isPending" />
+    <v-card v-else class="mx-auto" max-width="700" outlined>
       <v-card-title>
         My Restaurants
         <v-spacer></v-spacer>
@@ -21,12 +22,14 @@
       >
         <template v-slot:item.name="{ item }">
           <span>
-            <v-avatar>
+            <v-avatar class="mr-2">
               <img :src="url(item.logo[0].url)" />
             </v-avatar>
-            <router-link :to="{ path: `/partner/restaurant/${item._id}` }">{{
-              item.name
-            }}</router-link>
+            <router-link
+              class="{text-decoration: none;}"
+              :to="{ path: `/partner/restaurant/${item._id}` }"
+              >{{ item.name }}</router-link
+            >
           </span>
         </template>
         <template v-slot:item.action="{ item }">
@@ -36,7 +39,12 @@
         </template>
       </v-data-table>
       <div class="text-center pt-2">
-        <v-btn text dark color="teal white--text" @click="createNewRestaurant()">
+        <v-btn
+          text
+          dark
+          color="teal white--text"
+          @click="createNewRestaurant()"
+        >
           <span>Create new restaurant</span>
         </v-btn>
       </div>
@@ -49,6 +57,7 @@ export default {
   data() {
     return {
       imageRoot: process.env.VUE_APP_BACKEND_API,
+      isPending: true,
       search: "",
       headers: [
         {
@@ -74,8 +83,8 @@ export default {
       alert("Remove restaurant");
     },
     createNewRestaurant() {
-      this.$router.push('/partner/restaurant/create');
-    }
+      this.$router.push("/partner/restaurant/create");
+    },
   },
   computed: {
     currentUser() {
@@ -87,8 +96,14 @@ export default {
   },
   async created() {
     await this.$store.dispatch("userrestaurant/get");
+    this.isPending = false;
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+a {
+  text-decoration: none;
+  color: black;
+}
+</style>

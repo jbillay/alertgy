@@ -103,12 +103,39 @@ export interface AlertgyRestaurant {
   id: string;
 }
 
- export interface AlertgyUserRestaurant {
-   _id: string;
-   createdAt: Date;
-   updatedAt: Date;
-   __v: number;
-   restaurant: AlertgyRestaurant;
-   user: AlertgyUser;
-   id: string;
- }
+export interface AlertgyUserRestaurant {
+  _id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+  restaurant: AlertgyRestaurant;
+  user: AlertgyUser;
+  id: string;
+}
+
+export interface AlertgyMenuItem {
+  available: boolean;
+  pictures: any[];
+  allergens: any[];
+  menu_items_categories: any[];
+  _id: string;
+  name: string;
+  description: string;
+  price: number;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+  menu_category: AlertgyMenuCategory;
+  restaurant: AlertgyRestaurant;
+  id: string;
+}
+
+export interface AlertgyMenuCategory {
+  _id: string;
+  name: string;
+  order: number;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+  id: string;
+}

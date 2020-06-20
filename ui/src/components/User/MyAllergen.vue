@@ -1,6 +1,7 @@
 <template>
   <div>
-    <v-card class="mx-auto" max-width="700" outlined>
+    <LoadingSpinner v-if="isPending" />
+    <v-card v-else class="mx-auto" max-width="700" outlined>
       <v-card-title>
         My Allergens
         <v-spacer></v-spacer>
@@ -47,19 +48,20 @@ export default {
   data() {
     return {
       imageRoot: process.env.VUE_APP_BACKEND_API,
-      search: '',
+      isPending: true,
+      search: "",
       headers: [
         {
-          text: 'Allergen',
-          align: 'start',
+          text: "Allergen",
+          align: "start",
           sortable: true,
-          value: 'name',
+          value: "name",
         },
         {
-          text: 'Action',
-          align: 'start',
+          text: "Action",
+          align: "start",
           sortable: false,
-          value: 'action',
+          value: "action",
         },
       ],
     };
@@ -69,23 +71,24 @@ export default {
       return new URL(pictUrl, this.imageRoot).href;
     },
     goToAllergen() {
-      this.$router.push('/allergens');
+      this.$router.push("/allergens");
     },
     async removeAllergen(allergen) {
       const allergenList = [allergen];
-      await this.$store.dispatch('userallergen/remove', allergenList);
+      await this.$store.dispatch("userallergen/remove", allergenList);
     },
   },
   computed: {
     currentUser() {
-      return this.$store.getters['user/userInfo'];
+      return this.$store.getters["user/userInfo"];
     },
     userAllergens() {
-      return this.$store.getters['userallergen/all'];
+      return this.$store.getters["userallergen/all"];
     },
   },
   async created() {
-    await this.$store.dispatch('userallergen/get');
+    await this.$store.dispatch("userallergen/get");
+    this.isPending = false;
   },
 };
 </script>

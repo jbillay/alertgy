@@ -8,11 +8,9 @@
 </template>
 
 <script>
-import Message from "@/components/Utils/Message.vue";
 import PartnerRestaurants from "@/components/Partner/PartnerRestaurants.vue";
 export default {
   components: {
-    Message,
     PartnerRestaurants,
   },
 };

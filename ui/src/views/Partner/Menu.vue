@@ -8,13 +8,7 @@
 </template>
 
 <script>
-import Message from '@/components/Utils/Message.vue';
-
-export default {
-  components: {
-    Message,
-  },
-};
+export default {};
 </script>
 
 <style lang="scss" scoped></style>

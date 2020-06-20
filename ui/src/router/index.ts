@@ -10,6 +10,7 @@ import PartnerRestaurant from "@/views/Partner/Restaurant.vue";
 import PartnerMenu from "@/views/Partner/Menu.vue";
 import PartnerDisplayRestaurant from "@/views/Partner/DisplayRestaurant.vue";
 import PartnerCreateRestaurant from "@/views/Partner/CreateRestaurant.vue";
+import PartnerDisplayMenuRestaurant from "@/views/Partner/DisplayMenuRestaurant.vue";
 
 import PartnerLogin from "@/views/Partner/Login.vue";
 import UserLogin from "@/views/User/Login.vue";
@@ -90,14 +91,21 @@ const routes = [
             props: true,
             meta: partnerMeta,
           },
+          {
+            path: ":id/menu",
+            name: "menuRestaurant",
+            component: PartnerDisplayMenuRestaurant,
+            props: true,
+            meta: partnerMeta,
+          },
+          {
+            path: ":id",
+            name: "restaurant",
+            component: PartnerDisplayRestaurant,
+            props: true,
+            meta: partnerMeta,
+          }
         ],
-      },
-      {
-        path: "restaurant/:id",
-        name: "restaurant",
-        component: PartnerDisplayRestaurant,
-        props: true,
-        meta: partnerMeta,
       },
       {
         path: "menu",

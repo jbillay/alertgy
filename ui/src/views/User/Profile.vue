@@ -1,6 +1,7 @@
 <template>
   <div>
-    <v-container>
+    <LoadingSpinner v-if="isPending" />
+    <v-container v-else>
       <Message />
       <v-card max-width="500" class="mx-auto">
         <div class="d-flex flex-no-wrap justify-space-between">
@@ -32,7 +33,10 @@
                 Update profile
               </v-btn>
             </template>
-            <UserUpdateProfile :user="currentUser" v-on:updateDialog="updateDialog" />
+            <UserUpdateProfile
+              :user="currentUser"
+              v-on:updateDialog="updateDialog"
+            />
           </v-dialog>
         </v-card-actions>
       </v-card>
@@ -41,19 +45,18 @@
 </template>
 
 <script>
-import Message from "@/components/Utils/Message.vue";
 import UserUpdateProfile from "@/components/User/UserUpdateProfile.vue";
 import VueQRCodeComponent from "vue-qrcode-component";
 import jsPDF from "jspdf";
 
 export default {
   components: {
-    Message,
     VueQRCodeComponent,
     UserUpdateProfile,
   },
   data() {
     return {
+      isPending: true,
       QrCodeSize: 180,
       dialog: false,
     };
@@ -68,6 +71,7 @@ export default {
   },
   async created() {
     await this.$store.dispatch("userallergen/get");
+    this.isPending = false;
   },
   methods: {
     updateDialog(status) {

@@ -6,6 +6,7 @@ import allergen from "./allergen";
 import restaurant from "./restaurant";
 import userallergen from "./userallergen";
 import userrestaurant from "./userrestaurant";
+import menuitem from "./menuitem";
 
 Vue.use(Vuex);
 
@@ -19,6 +20,7 @@ export default new Vuex.Store({
     restaurant,
     userallergen,
     userrestaurant,
+    menuitem,
   },
   strict: debug,
 });

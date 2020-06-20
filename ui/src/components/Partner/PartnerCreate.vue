@@ -77,13 +77,9 @@
 </template>
 
 <script>
-import Message from "@/components/Utils/Message.vue";
 import short from "short-uuid";
 
 export default {
-  components: {
-    Message,
-  },
   data: () => ({
     valid: true,
     showPassword: false,

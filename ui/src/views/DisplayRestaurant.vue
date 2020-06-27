@@ -1,6 +1,6 @@
 <template>
   <div>
-    <InfoRestaurant :id="this.id" type="Partner"/>
+    <InfoRestaurant :id="this.id" :type="this.type" />
   </div>
 </template>
 
@@ -13,6 +13,9 @@ export default {
   },
   props: {
     id: {
+      type: String,
+    },
+    type: {
       type: String,
     },
   },

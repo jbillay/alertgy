@@ -4,11 +4,10 @@ import VueRouter from "vue-router";
 import UserHome from "@/views/User/Home.vue";
 import UserAllergens from "@/views/User/Allergens.vue";
 import UserProfile from "@/views/User/Profile.vue";
+import UserDisplayMenuRestaurant from "@/views/User/DisplayMenuRestaurant.vue";
 
 import PartnerHome from "@/views/Partner/Home.vue";
-import PartnerRestaurant from "@/views/Partner/Restaurant.vue";
 import PartnerMenu from "@/views/Partner/Menu.vue";
-import PartnerDisplayRestaurant from "@/views/Partner/DisplayRestaurant.vue";
 import PartnerCreateRestaurant from "@/views/Partner/CreateRestaurant.vue";
 import PartnerDisplayMenuRestaurant from "@/views/Partner/DisplayMenuRestaurant.vue";
 
@@ -16,6 +15,8 @@ import PartnerLogin from "@/views/Partner/Login.vue";
 import UserLogin from "@/views/User/Login.vue";
 
 
+import DisplayRestaurant from "@/views/DisplayRestaurant.vue";
+import Restaurant from "@/views/Restaurant.vue";
 import Root from "@/views/Root.vue";
 import Unauthorized from "@/views/Unauthorized.vue";
 import NotFound from "@/views/NotFound.vue";
@@ -62,6 +63,29 @@ const routes = [
         props: true,
         meta: userMeta,
       },
+      {
+        path: "restaurant",
+        name: "userRestaurants",
+        component: Restaurant,
+        props: true,
+        meta: userMeta,
+        children: [
+          {
+            path: ":id/menu",
+            name: "userMenuRestaurant",
+            component: UserDisplayMenuRestaurant,
+            props: true,
+            meta: userMeta,
+          },
+          {
+            path: ":id",
+            name: "userRestaurant",
+            component: DisplayRestaurant,
+            props: (route: any) => ({ id: route.params.id, type: "User"}),
+            meta: userMeta,
+          }
+        ],
+      },
     ],
   },
   {
@@ -79,8 +103,8 @@ const routes = [
       },
       {
         path: "restaurant",
-        name: "restaurants",
-        component: PartnerRestaurant,
+        name: "partnerRestaurants",
+        component: Restaurant,
         props: true,
         meta: partnerMeta,
         children: [
@@ -93,16 +117,16 @@ const routes = [
           },
           {
             path: ":id/menu",
-            name: "menuRestaurant",
+            name: "partnerMenuRestaurant",
             component: PartnerDisplayMenuRestaurant,
             props: true,
             meta: partnerMeta,
           },
           {
             path: ":id",
-            name: "restaurant",
-            component: PartnerDisplayRestaurant,
-            props: true,
+            name: "partnerRestaurant",
+            component: DisplayRestaurant,
+            props: (route: any) => ({ id: route.params.id, type: "Partner"}),
             meta: partnerMeta,
           }
         ],

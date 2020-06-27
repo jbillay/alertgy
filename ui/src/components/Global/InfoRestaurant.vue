@@ -54,11 +54,13 @@
 </template>
 
 <script>
+import UserActionRestaurant from "@/components/User/ActionRestaurant.vue";
 import PartnerActionRestaurant from "@/components/Partner/PartnerActionRestaurant.vue";
 
 export default {
   components: {
     PartnerActionRestaurant,
+    UserActionRestaurant,
   },
   data() {
     return {

@@ -2,9 +2,9 @@
   <div>
       <v-card>
         <v-card-title>
-          <span class="headline">Edit Menu Item: {{ item.name }}</span>
+          <span class="headline">Edit Menu Item: {{ editItem.name }}</span>
         </v-card-title>
-        {{ item }}
+        {{ editItem }}
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="submitUpdate()"
@@ -22,7 +22,7 @@ export default {
     dialog: {
       type: Boolean,
     },
-    item: {
+    editItem: {
       type: Object,
     },
   },

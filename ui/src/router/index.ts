@@ -14,7 +14,7 @@ import PartnerDisplayMenuRestaurant from "@/views/Partner/DisplayMenuRestaurant.
 import PartnerLogin from "@/views/Partner/Login.vue";
 import UserLogin from "@/views/User/Login.vue";
 
-
+import PublicMenu from "@/views/PublicMenu.vue";
 import DisplayRestaurant from "@/views/DisplayRestaurant.vue";
 import Restaurant from "@/views/Restaurant.vue";
 import Root from "@/views/Root.vue";
@@ -81,9 +81,9 @@ const routes = [
             path: ":id",
             name: "userRestaurant",
             component: DisplayRestaurant,
-            props: (route: any) => ({ id: route.params.id, type: "User"}),
+            props: (route: any) => ({ id: route.params.id, type: "User" }),
             meta: userMeta,
-          }
+          },
         ],
       },
     ],
@@ -126,9 +126,9 @@ const routes = [
             path: ":id",
             name: "partnerRestaurant",
             component: DisplayRestaurant,
-            props: (route: any) => ({ id: route.params.id, type: "Partner"}),
+            props: (route: any) => ({ id: route.params.id, type: "Partner" }),
             meta: partnerMeta,
-          }
+          },
         ],
       },
       {
@@ -162,6 +162,35 @@ const routes = [
         meta: {
           layout: "Empty",
         },
+      },
+    ],
+  },
+  {
+    path: "/public",
+    component: Root,
+    meta: {
+      layout: "Empty",
+    },
+    children: [
+      {
+        path: "restaurant/:id",
+        name: "publicRestaurant",
+        component: Root,
+        props: true,
+        meta: {
+          layout: "Empty",
+        },
+        children: [
+          {
+            path: "menu",
+            name: "publicMenu",
+            component: PublicMenu,
+            props: true,
+            meta: {
+              layout: "Empty",
+            },
+          },
+        ],
       },
     ],
   },

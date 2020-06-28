@@ -1,6 +1,8 @@
-import { AlertgyAllergen, AlertgyUserAllergen } from '@/types/alertgy.d';
-import ApiService from './ApiService';
-import StorageService from './StorageService';
+import { AlertgyUser } from "@/types/alertgy.d";
+import { AlertgyAllergen, AlertgyUserAllergen } from "@/types/alertgy.d";
+import ApiService from "./ApiService";
+import StorageService from "./StorageService";
+import AlertgyError from "./AlertgyErrorService";
 
 const UserAllergenService = {
   /**
@@ -24,6 +26,31 @@ const UserAllergenService = {
     }
   },
 
+  /**
+   * Retrieve all allergens for specific user
+   *
+   * @returns allergen list
+   **/
+  public: async function(username: string): Promise<AlertgyAllergen[]> {
+    const userAllergens: AlertgyAllergen[] = [];
+    const responseUser = await ApiService.get(
+      `/users?_limit=1&username=${username}`
+    );
+    if (responseUser.data.length < 1) {
+      throw new AlertgyError("User Not Found");
+    } else {
+      const user: AlertgyUser = responseUser.data[0];
+      const responseAllergen = await ApiService.get(
+        `/user-allergens?user=${user._id}`
+      );
+      if (responseAllergen.data.length > 0) {
+        responseAllergen.data.forEach((item: AlertgyUserAllergen) => {
+          userAllergens.push(item.allergen);
+        });
+      }
+      return userAllergens;
+    }
+  },
   /**
    * Retrieve one allergen for the current user (AlertgyUserAllergen[])
    *
@@ -54,7 +81,7 @@ const UserAllergenService = {
       await Promise.all(
         allergenList.map(async (allergen: AlertgyAllergen) => {
           const element = { user: user._id, allergen: allergen._id };
-          await ApiService.post('/user-allergens', element);
+          await ApiService.post("/user-allergens", element);
         })
       );
     } catch (error) {

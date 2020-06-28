@@ -1,4 +1,5 @@
 import UserAllergenService from "@/services/UserAllergenService";
+import AlertgyError from "@/services/AlertgyErrorService";
 import { AlertgyAllergen, AlertgyMessage } from "@/types/alertgy.d";
 
 class State {
@@ -25,6 +26,25 @@ const getUserAllergenAction = async function(context: any): Promise<void> {
     };
     context.commit("message/createMessage", messageInfo, { root: true });
     throw new Error(error);
+  }
+};
+
+const getPublicUserAllergenAction = async function(context: any, userId: string): Promise<void> {
+  try {
+    context.commit("message/clearMessage", {}, { root: true });
+    const allergens: AlertgyAllergen[] = await UserAllergenService.public(userId);
+    context.commit("userAllergenSuccess", allergens);
+  } catch (error) {
+    if (error instanceof AlertgyError) {
+      const messageInfo: AlertgyMessage = {
+        type: "error",
+        message: error.message,
+      };
+      context.commit("message/createMessage", messageInfo, { root: true });  
+      context.commit("userAllergenSuccess", null);
+    } else {
+      throw new Error(error);
+    }
   }
 };
 
@@ -107,6 +127,7 @@ export default {
     get: getUserAllergenAction,
     add: addUserAllergenAction,
     remove: removeUserAllergenAction,
+    public: getPublicUserAllergenAction,
   },
   state: new State(),
 };

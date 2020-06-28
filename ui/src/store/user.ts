@@ -1,4 +1,3 @@
-import { ActionContext } from "vuex";
 import StorageService from "@/services/StorageService";
 import UserService from "@/services/UserService";
 import { AlertgyUser, AlertgyMessage } from "@/types/alertgy.d";

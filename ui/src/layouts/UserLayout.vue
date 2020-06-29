@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <v-app>
     <Navbar />
     <slot></slot>
-  </div>
+  </v-app>
 </template>
 
 <script>

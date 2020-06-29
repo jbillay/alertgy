@@ -8,17 +8,25 @@
           <v-card>
             <v-card-text>
               <v-row align="center" justify="center">
-                Enter User Identifier
+                Enter AlertGy Identifier
               </v-row>
               <v-row align="center" justify="center">
                 <v-text-field
                   v-model="userId"
-                  label="User Identifier"
+                  label="AlertGy Identifier"
                   required
                 ></v-text-field>
               </v-row>
             </v-card-text>
             <v-card-actions>
+              <v-btn
+                v-if="!qrCodeScan"
+                color="primary"
+                class="mr-4"
+                @click="displayQRScan"
+              >
+                Scan Alertgy Card
+              </v-btn>
               <v-spacer />
               <v-btn color="success" class="mr-4" @click="submitUserId">
                 Submit
@@ -104,11 +112,18 @@
         </v-tabs>
       </v-card>
     </v-container>
+    <v-container v-if="qrCodeScan" class="qrCodeReader">
+      <p class="error">{{ qrCodeScanError }}</p>
+      <qrcode-stream @decode="onDecode" @init="onInit" />
+    </v-container>
   </div>
 </template>
 
 <script>
+import { QrcodeStream } from "vue-qrcode-reader";
+
 export default {
+  components: { QrcodeStream },
   data() {
     return {
       userAllergens: null,
@@ -117,6 +132,8 @@ export default {
       isPending: true,
       tab: null,
       showInvalid: false,
+      qrCodeScanError: null,
+      qrCodeScan: false,
     };
   },
   props: {
@@ -131,6 +148,36 @@ export default {
     },
     url(pictUrl) {
       return new URL(pictUrl, this.imageRoot).href;
+    },
+    async onDecode(result) {
+      this.userId = result;
+      this.qrCodeScan = false;
+      await this.submitUserId();
+    },
+    async onInit(promise) {
+      try {
+        await promise;
+      } catch (error) {
+        if (error.name === "NotAllowedError") {
+          this.qrCodeScanError =
+            "ERROR: you need to grant camera access permisson";
+        } else if (error.name === "NotFoundError") {
+          this.qrCodeScanError = "ERROR: no camera on this device";
+        } else if (error.name === "NotSupportedError") {
+          this.qrCodeScanError =
+            "ERROR: secure context required (HTTPS, localhost)";
+        } else if (error.name === "NotReadableError") {
+          this.qrCodeScanError = "ERROR: is the camera already in use?";
+        } else if (error.name === "OverconstrainedError") {
+          this.qrCodeScanError = "ERROR: installed cameras are not suitable";
+        } else if (error.name === "StreamApiNotSupportedError") {
+          this.qrCodeScanError =
+            "ERROR: Stream API is not supported in this browser";
+        }
+      }
+    },
+    displayQRScan() {
+      this.qrCodeScan = true;
     },
   },
   computed: {
@@ -159,8 +206,8 @@ export default {
     },
   },
   async created() {
-      await this.$store.dispatch("menuitem/get", this.id);
-      this.isPending = false;
+    await this.$store.dispatch("menuitem/get", this.id);
+    this.isPending = false;
   },
 };
 </script>
@@ -168,5 +215,9 @@ export default {
 <style lang="scss" scoped>
 .notAllow {
   background-color: #ff5252;
+}
+.qrCodeReader {
+  width: 250px;
+  height: 250px;
 }
 </style>

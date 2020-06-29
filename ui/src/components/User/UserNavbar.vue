@@ -11,7 +11,12 @@
       </v-btn>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" temporary absolute bottom>
+    <v-navigation-drawer
+      v-model="drawer"
+      temporary
+      absolute
+      bottom
+    >
       <v-system-bar></v-system-bar>
       <v-list>
         <v-list-item>

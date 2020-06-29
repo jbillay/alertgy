@@ -13,12 +13,12 @@
             <v-card-subtitle v-text="currentUser.email"></v-card-subtitle>
           </div>
 
-          <v-avatar class="ma-3" size="125" tile>
+          <v-avatar class="ma-3" :size="QrCodeSize" tile>
             <VueQRCodeComponent
               ref="QrCode"
               :size="QrCodeSize"
               color="#17a2b8"
-              text="Text to encode"
+              :text="currentUser.username"
             >
             </VueQRCodeComponent>
           </v-avatar>
@@ -57,7 +57,7 @@ export default {
   data() {
     return {
       isPending: true,
-      QrCodeSize: 180,
+      QrCodeSize: 125,
       dialog: false,
     };
   },
